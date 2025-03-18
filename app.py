@@ -177,7 +177,9 @@ if df is not None:
         search_term = st.sidebar.text_input("Search for a fragrance by name:")
         
         if search_term:
-            filtered_df = df[df['Perfume'].str.contains(search_term, case=False, na=False)]
+            # filtered_df = df[df['Perfume'].str.contains(search_term, case=False, na=False)]
+            filtered_df = df[df['Perfume'].str.contains(search_term, case=False, na=False, regex=False)]
+
             
             if not filtered_df.empty:
                 st.sidebar.subheader("Select a fragrance:")
