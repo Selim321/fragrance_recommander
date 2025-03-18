@@ -177,9 +177,7 @@ if df is not None:
         search_term = st.sidebar.text_input("Search for a fragrance by name:")
         
         if search_term:
-            # filtered_df = df[df['Perfume'].str.contains(search_term, case=False, na=False)]
             filtered_df = df[df['Perfume'].str.contains(search_term, case=False, na=False, regex=False)]
-
             
             if not filtered_df.empty:
                 st.sidebar.subheader("Select a fragrance:")
@@ -188,11 +186,17 @@ if df is not None:
                 options = {i: f"{row['Perfume']} by {row['Brand']}" 
                          for i, row in filtered_df.iterrows()}
                 
+                if "selected_index" not in st.session_state:
+                    st.session_state.selected_index = None
+
                 selected_index = st.sidebar.selectbox(
                     "Choose a fragrance:",
                     list(options.keys()),
                     format_func=lambda x: options[x]
                 )
+
+                # Store the selected index in session state
+                st.session_state.selected_index = selected_index
                 
                 # Show selected fragrance details
                 st.header("Selected Fragrance")
